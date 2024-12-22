@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <script src="
+    https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js
+    "></script>
+</head>
+
+<body>
+    <div id="products">
+
+    </div>
+    <button id="add">add Product</button>
+    <br />
+    <input type="text" id="pName">
+    <button id="del">Delete Product</button>
+</body>
+<script>
+    $(document).ready(function () {
+        $('#add').on('click', () => {
+            window.location.pathname = '/add';
+            // $.ajax({
+            //     url: '/add',
+            //     method: "GET",
+            //     success:(result)=>{
+            //         $('body').html(result);
+            //     }
+            // });
+        });
+        $.get('http://localhost:6060/getProducts', function (data) {
+            $('#products').html(data);
+            console.log(data);
+            console.log(JSON.parse(data));
+            console.log(JSON.parse(data)[0].Name);
+        }, "text");
+        $('#del').on('click', () => {
+            let pName = $('#pName').val();
+            $.ajax({
+                url: `http://localhost:6060/del/${pName}`,
+                method: 'DELETE',
+                success:function(result){
+                    window.location.href = result.redirectUrl;
+                },
+                error:(xhr,status,error)=>{
+
+                }
+            });
+        })
+    });
+</script>
+
+</html>

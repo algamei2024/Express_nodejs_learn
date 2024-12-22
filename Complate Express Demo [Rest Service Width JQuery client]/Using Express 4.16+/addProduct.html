@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add product</title>
+    <script src="
+        https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js
+        "></script>
+</head>
+<body>
+    <label for="name">product Name</label>
+    <input type="text" name="name" id="name">
+    <br />
+    <label for="price">product price</label>
+    <input type="number" price="price" id="price">
+    <button id="add">add products</button>
+    <br />
+</body>
+<script>
+    $(document).ready(function(){
+        $('#add').on('click',function(){
+            $.ajax({
+                url:'http://localhost:6060/insert',
+                method:'POST',
+                data:{
+                    'name':$('#name').val(),
+                    'price':$('#price').val()
+                },
+                success:function(result){
+                    window.location.pathname = result.redirectUrl;
+                }
+            });
+        });
+    });
+</script>
+</html>
